@@ -7,15 +7,23 @@ the [nltk wordnet interface](http://www.nltk.org/howto/wordnet.html)
 
 
 
-Install
--------
+## Install
+
 ````bash
 pip install spacy-wordnet
 ````
 
+## Requirements
+Some nltk data must be installed before using this package
 
-Usage
------
+````bash
+python -m nltk.downloader wordnet
+python -m nltk.downloader omw
+
+````
+
+## Usage
+
 ````python
 
 import spacy

@@ -23,7 +23,3 @@ if __name__ == "__main__":
     setup(use_pyscaffold=True,
           package_data={'spacy_wordnet': ['data/**/*.ppv']})
 
-    import nltk
-
-    nltk.download('wordnet')
-    nltk.download('omw')
