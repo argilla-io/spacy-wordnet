@@ -9,7 +9,7 @@ BUILDDIR      = _build
 AUTODOCDIR    = api
 AUTODOCBUILD  = sphinx-apidoc
 PROJECT       = spacy-wordnet
-MODULEDIR     = ../src/spacy_wordnet
+MODULEDIR     = ../spacy_wordnet
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $?), 1)

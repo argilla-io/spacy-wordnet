@@ -21,5 +21,5 @@ except VersionConflict:
 
 if __name__ == "__main__":
     setup(use_pyscaffold=True,
-          package_data={'spacy_wordnet': ['data/**/*.ppv']})
-
+          #package_data={'spacy_wordnet': ['data/**/*.ppv']}
+          )
