@@ -47,3 +47,6 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
+
+
+wordnet_domains/

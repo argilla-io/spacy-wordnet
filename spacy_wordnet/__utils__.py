@@ -23,7 +23,7 @@ __WN_POS_MAPPING = {
     AUX: WN_VERB
 }
 
-__WN_DOMAINS_PATH = os.path.join(get_package_basepath(), 'data/wordnet_domains/*.ppv')
+__WN_DOMAINS_PATH = os.path.join(get_package_basepath(), 'data/wordnet_domains.txt')
 
 __WN_DOMAINS_BY_SSID = defaultdict(list)
 
@@ -32,20 +32,13 @@ def wordnet_domains_path() -> str:
     return __WN_DOMAINS_PATH
 
 
-def load_wordnet_domains(path: str, threshold: float = 0.0009):
-    def domain_name_from_filename(filename: str) -> str:
-        name, _ = os.path.splitext(os.path.basename(filename))
-        return name
-
+def load_wordnet_domains(path: str):
     if __WN_DOMAINS_BY_SSID:
         return
 
-    for filename in glob.glob(path):
-        domain_name = domain_name_from_filename(filename)
-        for line in open(filename, 'r'):
-            ssid, weight = line.strip().split('\t')
-            if float(weight) >= threshold:
-                __WN_DOMAINS_BY_SSID[ssid].append(domain_name)
+    for line in open(path, 'r'):
+        ssid, domains = line.strip().split('\t')
+        __WN_DOMAINS_BY_SSID[ssid] = domains.split(' ')
 
 
 def get_domains_for_synset(synset: Synset) -> List[str]:
@@ -64,3 +57,25 @@ def fetch_wordnet_lang(lang: Optional[str] = None) -> str:
         raise Exception('Language {} not supported'.format(lang))
 
     return language
+
+
+def __persist_wordnet_domains(path: str):
+    with open(path, 'w') as file:
+        file.writelines(['{}\n'.format('\t'.join([k, ' '.join(v)])) for k, v in __WN_DOMAINS_BY_SSID.items()])
+        file.close()
+
+
+def __load_wordnet_domains(path: str, threshold: float = 0.0009):
+    def domain_name_from_filename(filename: str) -> str:
+        name, _ = os.path.splitext(os.path.basename(filename))
+        return name
+
+    if __WN_DOMAINS_BY_SSID:
+        return
+
+    for filename in glob.glob(path):
+        domain_name = domain_name_from_filename(filename)
+        for line in open(filename, 'r'):
+            ssid, weight = line.strip().split('\t')
+            if float(weight) >= threshold:
+                __WN_DOMAINS_BY_SSID[ssid].append(domain_name)
