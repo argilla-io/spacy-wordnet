@@ -1,7 +1,7 @@
 import glob
 import os
 from collections import defaultdict
-from typing import Optional, List
+from typing import Optional, List, Dict, Set
 
 from nltk.corpus.reader.wordnet import \
     ADJ as WN_ADJ, \
@@ -23,28 +23,6 @@ __WN_POS_MAPPING = {
     AUX: WN_VERB
 }
 
-__WN_DOMAINS_PATH = os.path.join(get_package_basepath(), 'data/wordnet_domains.txt')
-
-__WN_DOMAINS_BY_SSID = defaultdict(list)
-
-
-def wordnet_domains_path() -> str:
-    return __WN_DOMAINS_PATH
-
-
-def load_wordnet_domains(path: str):
-    if __WN_DOMAINS_BY_SSID:
-        return
-
-    for line in open(path, 'r'):
-        ssid, domains = line.strip().split('\t')
-        __WN_DOMAINS_BY_SSID[ssid] = domains.split(' ')
-
-
-def get_domains_for_synset(synset: Synset) -> List[str]:
-    ssid = '{}-{}'.format(str(synset.offset()).zfill(8), synset.pos())
-    return __WN_DOMAINS_BY_SSID.get(ssid, [])
-
 
 def spacy2wordnet_pos(spacy_pos: int) -> Optional[str]:
     return __WN_POS_MAPPING.get(spacy_pos)
@@ -59,23 +37,36 @@ def fetch_wordnet_lang(lang: Optional[str] = None) -> str:
     return language
 
 
-def __persist_wordnet_domains(path: str):
+def _persist_wordnet_domains(path: str, domains: Dict[str, Set[str]]):
     with open(path, 'w') as file:
-        file.writelines(['{}\n'.format('\t'.join([k, ' '.join(v)])) for k, v in __WN_DOMAINS_BY_SSID.items()])
+        file.writelines(['{}\n'.format('\t'.join([k, ' '.join(v)])) for k, v in domains.items()])
         file.close()
 
 
-def __load_wordnet_domains(path: str, threshold: float = 0.0009):
+def _load_wordnet_domains_from_ppv(path: str, threshold: float = 0.00009) -> Dict[str, List[str]]:
     def domain_name_from_filename(filename: str) -> str:
         name, _ = os.path.splitext(os.path.basename(filename))
         return name
 
-    if __WN_DOMAINS_BY_SSID:
-        return
+    domains_by_ssid = defaultdict(list)
 
     for filename in glob.glob(path):
         domain_name = domain_name_from_filename(filename)
         for line in open(filename, 'r'):
             ssid, weight = line.strip().split('\t')
             if float(weight) >= threshold:
-                __WN_DOMAINS_BY_SSID[ssid].append(domain_name)
+                domains_by_ssid[ssid].append(domain_name)
+
+    return domains_by_ssid
+
+
+def _load_wordnet_domains_from_txt(filepath: str) -> Dict[str, List[str]]:
+    domains_by_ssid = defaultdict(list)
+    for filename in glob.glob(filepath):
+        for line in open(filename, 'r'):
+            row = line.strip().split(' ')
+            ssid = row[0]
+            domains = row[2:]
+            domains_by_ssid[ssid].extend(domains)
+
+    return domains_by_ssid

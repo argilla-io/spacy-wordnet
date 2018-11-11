@@ -3,6 +3,28 @@ from spacy.tokens.token import Token
 
 from spacy_wordnet.__utils__ import *
 
+__WN_DOMAINS_PATH = os.path.join(get_package_basepath(), 'data/wordnet_domains.txt')
+
+__WN_DOMAINS_BY_SSID = defaultdict(list)
+
+
+def wordnet_domains_path() -> str:
+    return __WN_DOMAINS_PATH
+
+
+def load_wordnet_domains(path: str):
+    if __WN_DOMAINS_BY_SSID:
+        return
+
+    for line in open(path, 'r'):
+        ssid, domains = line.strip().split('\t')
+        __WN_DOMAINS_BY_SSID[ssid] = domains.split(' ')
+
+
+def get_domains_for_synset(synset: Synset) -> List[str]:
+    ssid = '{}-{}'.format(str(synset.offset()).zfill(8), synset.pos())
+    return __WN_DOMAINS_BY_SSID.get(ssid, [])
+
 
 class _WordnetDomains(object):
     def __init__(self):
