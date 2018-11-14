@@ -28,7 +28,7 @@ python -m nltk.downloader omw
 
 import spacy
 
-from spacy_wordnet.wornet_annotator import WordnetAnnotator 
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
 # Load an spacy model (supported models are "es" and "en") 
 nlp = spacy.load('en')

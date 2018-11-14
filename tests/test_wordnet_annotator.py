@@ -2,7 +2,7 @@ import unittest
 
 import spacy
 
-from spacy_wordnet.wornet_annotator import WordnetAnnotator
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
 
 class WordnetAnnotatorTest(unittest.TestCase):
