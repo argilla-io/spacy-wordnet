@@ -48,5 +48,9 @@ MANIFEST
 # Per-project virtualenvs
 .venv*/
 
+# vscode
+.history/
+.vscode/
+
 
 wordnet_domains/

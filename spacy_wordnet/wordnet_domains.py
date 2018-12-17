@@ -11,8 +11,7 @@ __WN_DOMAINS_BY_SSID = defaultdict(list)
 def wordnet_domains_path() -> str:
     return __WN_DOMAINS_PATH
 
-
-def load_wordnet_domains(path: str):
+def load_wordnet_domains(path: Optional[str] = wordnet_domains_path()):
     if __WN_DOMAINS_BY_SSID:
         return
 
@@ -25,19 +24,9 @@ def get_domains_for_synset(synset: Synset) -> List[str]:
     ssid = '{}-{}'.format(str(synset.offset()).zfill(8), synset.pos())
     return __WN_DOMAINS_BY_SSID.get(ssid, [])
 
-
-class _WordnetDomains(object):
-    def __init__(self):
-        load_wordnet_domains(wordnet_domains_path())
-
-    def domains_for_synset(self, synset: Synset) -> List[str]:
-        return get_domains_for_synset(synset)
-
-
 class Wordnet(object):
 
-    def __init__(self, token: Token, wn_domains: _WordnetDomains, lang: str = 'es'):
-        self.__wn_domains = wn_domains
+    def __init__(self, token: Token, lang: str = 'es'):
         self.__token = token
         self.__lang = fetch_wordnet_lang(lang)
         self.__synsets = self.__find_synsets(token, self.__lang)
@@ -53,8 +42,11 @@ class Wordnet(object):
     def wordnet_domains(self):
         return self.__wordnet_domains
 
-    def wordnet_domains_for_synset(self, synset):
+    def wordnet_domains_for_synset(self, synset: Synset):
         return get_domains_for_synset(synset)
+
+    def wordnet_synsets_for_domain(self, domains: List[str]):
+        return [synset for synset in self.synsets() if self.__has_domains(synset, domains)]
 
     @staticmethod
     def __find_synsets(token: Token, lang: str):
@@ -69,6 +61,10 @@ class Wordnet(object):
                 return token_synsets
 
         return []
+
+    @staticmethod
+    def __has_domains(synset: Synset, domains: List[str]) -> bool:
+        return not set(domains).isdisjoint(get_domains_for_synset(synset))
 
     def __find_wordnet_domains(self):
         return [domain for synset in self.synsets() for domain in get_domains_for_synset(synset)]
