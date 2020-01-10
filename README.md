@@ -49,28 +49,25 @@ token._.wordnet.lemmas()
 
 # And automatically tags with wordnet domains
 token._.wordnet.wordnet_domains()
+````
 
-# Imagine we want to enrich the following sentence with synonyms
-sentence = nlp('I want to withdraw 5,000 euros')
-
-# spaCy WordNet lets you find synonyms by domain of interest
-# for example economy
+spaCy WordNet lets you find synonyms by domain of interest for example economy
+````python
 economy_domains = ['finance', 'banking']
 enriched_sentence = []
+sentence = nlp('I want to withdraw 5,000 euros')
 
 # For each token in the sentence
 for token in sentence:
     # We get those synsets within the desired domains
     synsets = token._.wordnet.wordnet_synsets_for_domain(economy_domains)
-    if synsets:
-        lemmas_for_synset = []
-        for s in synsets:
-            # If we found a synset in the economy domains
-            # we get the variants and add them to the enriched sentence
-            lemmas_for_synset.extend(s.lemma_names())
-            enriched_sentence.append('({})'.format('|'.join(set(lemmas_for_synset))))
-    else:
+    if not synsets:
         enriched_sentence.append(token.text)
+    else:
+        lemmas_for_synset = [lemma for s in synsets for lemma in s.lemma_names()]
+        # If we found a synset in the economy domains
+        # we get the variants and add them to the enriched sentence
+        enriched_sentence.append('({})'.format('|'.join(set(lemmas_for_synset))))
 
 # Let's see our enriched sentence
 print(' '.join(enriched_sentence))
