@@ -20,6 +20,7 @@ __WN_LANGUAGES_MAPPING = dict(
     fr='fra',
     it='ita',
     pt='por',
+    de='deu',
 )
 __WN_POS_MAPPING = {
     ADJ: WN_ADJ,
