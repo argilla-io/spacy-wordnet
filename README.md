@@ -28,8 +28,13 @@ pip install spacy-wordnet
 ````
 
 
+### Supported languages
+We currently support Spanish, English and Portuguese, but we welcome contributions in order to add and test new languages supported by spaCy and NLTK.
 
 ## Usage
+
+
+### English example
 
 ````python
 
@@ -37,7 +42,7 @@ import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-# Load an spacy model (supported models are "es" and "en") 
+# Load an spacy model (supported models are "es", "en" and "pt") 
 nlp = spacy.load('en')
 nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 token = nlp('prices')[0]
@@ -74,4 +79,37 @@ print(' '.join(enriched_sentence))
 # >> I (need|want|require) to (draw|withdraw|draw_off|take_out) 5,000 euros
     
 ````
+
+### Portuguese example
+
+```python
+import spacy
+
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
+
+# Load an spacy model (you need to download the spacy pt model) 
+nlp = spacy.load('pt')
+nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
+text = "Eu quero retirar 5.000 euros"
+economy_domains = ['finance', 'banking']
+enriched_sentence = []
+sentence = nlp(text)
+
+# For each token in the sentence
+for token in sentence:
+    # We get those synsets within the desired domains
+    synsets = token._.wordnet.wordnet_synsets_for_domain(economy_domains)
+    if not synsets:
+        enriched_sentence.append(token.text)
+    else:
+        lemmas_for_synset = [lemma for s in synsets for lemma in s.lemma_names('por')]
+        # If we found a synset in the economy domains
+        # we get the variants and add them to the enriched sentence
+        enriched_sentence.append('({})'.format('|'.join(set(lemmas_for_synset))))
+
+# Let's see our enriched sentence
+print(' '.join(enriched_sentence))
+# >> Eu (querer|desejar|esperar) retirar 5.000 euros
+```
+
 
