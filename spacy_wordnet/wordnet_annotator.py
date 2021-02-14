@@ -15,13 +15,14 @@ except AttributeError:
     pass  # spacy 2.x
 
 
+@Language.factory("wordnet")
 class WordnetAnnotator(object):
     __FIELD = "wordnet"
 
-    def __init__(self, lang: str = "es"):
+    def __init__(self, nlp:Language):
         Token.set_extension(WordnetAnnotator.__FIELD, default=None, force=True)
         load_wordnet_domains()
-        self.__lang = lang
+        self.__lang = nlp.lang
 
     def __call__(self, doc: Doc):
         for token in doc:

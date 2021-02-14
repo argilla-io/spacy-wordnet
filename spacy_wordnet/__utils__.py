@@ -14,7 +14,13 @@ from spacy.parts_of_speech import ADJ, ADV, NOUN, VERB, AUX
 from spacy_wordnet import get_package_basepath
 
 __DEFAULT_LANG = 'spa'
-__WN_LANGUAGES_MAPPING = dict(es=__DEFAULT_LANG, en='eng', pt='por')
+__WN_LANGUAGES_MAPPING = dict(
+    es=__DEFAULT_LANG,
+    en='eng',
+    fr='fra',
+    it='ita',
+    pt='por',
+)
 __WN_POS_MAPPING = {
     ADJ: WN_ADJ,
     NOUN: WN_NOUN,
