@@ -13,6 +13,11 @@ from spacy.parts_of_speech import ADJ, ADV, NOUN, VERB, AUX
 
 from spacy_wordnet import get_package_basepath
 
+# The Open Multi Wordnet corpus contains the following languages:
+#   als arb bul cat cmn dan ell eus fas fin fra glg heb hrv ind ita jpn nld nno nob pol por qcn slv spa swe tha zsm
+#   ('deu' can be found in Extended Open Multi Wordnet)
+# to add more languages just update the __WN_LANGUAGES_MAPPING below
+
 __DEFAULT_LANG = 'spa'
 __WN_LANGUAGES_MAPPING = dict(es=__DEFAULT_LANG, en='eng', fr='fra', it='ita')
 __WN_POS_MAPPING = {
