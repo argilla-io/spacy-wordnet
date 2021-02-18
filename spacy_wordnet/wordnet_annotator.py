@@ -1,15 +1,16 @@
-from spacy.tokens.doc import Doc
-from spacy.tokens.token import Token
-from spacy.language import Language
+
+from spacy.tokens.doc       import Doc
+from spacy.tokens.token     import Token
+from spacy.parts_of_speech  import *
+from spacy.language         import Language
 
 from spacy_wordnet.wordnet_domains import Wordnet, load_wordnet_domains
 
 try:
 
-    @Language.factory("spacy_wordnet", default_config={"lang": "en"})
+    @Language.factory("spacy_wordnet", default_config={})
     def wordnet_annotator(nlp, name, lang: str):
-        return WordnetAnnotator(lang=lang)
-
+        return WordnetAnnotator(nlp=nlp)
 
 except AttributeError:
     pass  # spacy 2.x
@@ -30,3 +31,4 @@ class WordnetAnnotator(object):
             token._.set(WordnetAnnotator.__FIELD, wordnet)
 
         return doc
+
