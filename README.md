@@ -13,7 +13,7 @@ The spaCy WordNet component can be easily integrated into spaCy pipelines. You j
 ### Prerequisites
 
 * Python 3.X
-* spaCy 3.X
+* spaCy 2.X
 
 You also need to install the following NLTK wordnet data:
 
@@ -37,10 +37,13 @@ import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-# Load an spacy model (supported models are "es" and "en") 
+# Load a spacy model (supported models are 'es' 'it', 'fr' and 'en') 
 nlp = spacy.load('en')
-#nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
-nlp.add_pipe((wordnet')
+
+# with spacy 2
+nlp.add_pipe(WordnetAnnotator(nlp, 'wordnet'), after='tagger')
+# with spacy 3
+nlp.add_pipe('wordnet')
 token = nlp('prices')[0]
 
 # wordnet object link spacy token with nltk wordnet interface by giving acces to
@@ -53,6 +56,8 @@ token._.wordnet.wordnet_domains()
 
 # Imagine we want to enrich the following sentence with synonyms
 sentence = nlp('I want to withdraw 5,000 euros')
+
+#TODO: check the following
 
 # spaCy WordNet lets you find synonyms by domain of interest
 # for example economy
