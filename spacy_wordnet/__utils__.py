@@ -16,8 +16,10 @@ from spacy_wordnet import get_package_basepath
 # The Open Multi Wordnet corpus contains the following languages:
 #   als arb bul cat cmn dan ell eus fas fin fra glg heb hrv ind ita jpn nld nno nob pol por qcn slv spa swe tha zsm
 #   ('deu' can be found in Extended Open Multi Wordnet)
-# to add more languages just update the __WN_LANGUAGES_MAPPING below
-
+# the available spacy languages are:
+# af am ar bg bn ca cs da de el en es et eu fa fi fr ga gu he hi hr hu hy id is it ja kn ko ky lb lij
+# lt lv mk ml mr nb ne nl pl pt ro ru sa si sk sl sq sr sv ta te th ti tl tn tr tt uk ur vi xx yo zh
+# then the full mapping is
 __DEFAULT_LANG = 'spa'
 __WN_LANGUAGES_MAPPING = dict(
     es=__DEFAULT_LANG,
