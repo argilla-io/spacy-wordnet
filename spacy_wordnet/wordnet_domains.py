@@ -26,6 +26,18 @@ def get_domains_for_synset(synset: Synset) -> List[str]:
 
 class Wordnet(object):
 
+    # # TODO: add serialization
+    # def to_disk(self, path):
+    #     # save:
+    #     # __token?
+    #     # __lang?
+    #     # __synsets
+    #     # __lemmas
+    #     # __wordnet_domains
+    #     pass
+    # def from_disk(self, path):
+    #     pass
+
     def __init__(self, token: Token, lang: str = 'es'):
         self.__token = token
         self.__lang = fetch_wordnet_lang(lang)
