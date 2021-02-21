@@ -45,6 +45,9 @@ class Wordnet(object):
         self.__lemmas = self.__find_lemmas()
         self.__wordnet_domains = self.__find_wordnet_domains()
 
+    def lang(self):
+        return self.__lang
+
     def synsets(self):
         return self.__synsets
 

@@ -37,7 +37,7 @@ import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-# Load a spacy model (supported models are 'es' 'it', 'fr' and 'en') 
+# Load a spacy model (almost all Open Multi Wordnet languages are supported)
 nlp = spacy.load('en')
 
 # with spacy 2
@@ -57,8 +57,6 @@ token._.wordnet.wordnet_domains()
 # Imagine we want to enrich the following sentence with synonyms
 sentence = nlp('I want to withdraw 5,000 euros')
 
-#TODO: check the following
-
 # spaCy WordNet lets you find synonyms by domain of interest
 # for example economy
 economy_domains = ['finance', 'banking']
@@ -70,10 +68,11 @@ for token in sentence:
     synsets = token._.wordnet.wordnet_synsets_for_domain(economy_domains)
     if synsets:
         lemmas_for_synset = []
+	lang = token._.wordnet.lang()
         for s in synsets:
             # If we found a synset in the economy domains
             # we get the variants and add them to the enriched sentence
-            lemmas_for_synset.extend(s.lemma_names())
+	    lemmas_for_synset += [lemma.name() for lemma in s.lemmas(lang=lang)]
             enriched_sentence.append('({})'.format('|'.join(set(lemmas_for_synset))))
     else:
         enriched_sentence.append(token.text)
