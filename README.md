@@ -29,7 +29,7 @@ pip install spacy-wordnet
 
 
 ### Supported languages
-We currently support Spanish, English and Portuguese, but we welcome contributions in order to add and test new languages supported by spaCy and NLTK.
+Almost all Open Multi Wordnet languages are supported.
 
 ## Usage
 
