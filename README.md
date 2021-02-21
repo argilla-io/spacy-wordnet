@@ -29,7 +29,7 @@ pip install spacy-wordnet
 
 
 ### Supported languages
-We currently support Spanish, English and Portuguese, but we welcome contributions in order to add and test new languages supported by spaCy and NLTK.
+Almost all Open Multi Wordnet languages are supported.
 
 ## Usage
 
@@ -42,11 +42,7 @@ import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-<<<<<<< HEAD
 # Load a spacy model (almost all Open Multi Wordnet languages are supported)
-=======
-# Load an spacy model (supported models are "es", "en" and "pt") 
->>>>>>> recognai/master
 nlp = spacy.load('en')
 
 # with spacy 2
