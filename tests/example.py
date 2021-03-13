@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     # Load an spacy model (supported models are "es" and "en")
     nlp = spacy.load('en')
-    nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
+    nlp.add_pipe("spacy_wordnet", after='tagger')
     token = nlp('prices')[0]
 
     # wordnet object link spacy token with nltk wordnet interface by giving acces to

@@ -1,8 +1,12 @@
 from spacy.tokens.doc import Doc
 from spacy.tokens.token import Token
+from spacy.language import Language
 
 from spacy_wordnet.wordnet_domains import Wordnet, load_wordnet_domains
 
+@Language.factory("spacy_wordnet", default_config={"lang": "en"})
+def wordnet_annotator(nlp, name, lang: str):
+	return WordnetAnnotator(lang=lang)
 
 class WordnetAnnotator(object):
     __FIELD = 'wordnet'
