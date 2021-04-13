@@ -16,12 +16,12 @@ class WordnetAnnotatorTest(unittest.TestCase):
 
         super().__init__(*args, **kwargs)
 
-        self.nlp_en = spacy.load('en')
-        self.nlp_es = spacy.load('es')
+        self.nlp_en = spacy.load('en_core_web_sm')
+        self.nlp_es = spacy.load('es_core_news_sm')
 
         # Add wordnet component
-        self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en.lang))
-        self.nlp_es.add_pipe(WordnetAnnotator(self.nlp_es.lang))
+        self.nlp_en.add_pipe("spacy_wordnet", config={'lang': self.nlp_en.lang})
+        self.nlp_es.add_pipe("spacy_wordnet", config={'lang': self.nlp_es.lang})
 
     def test_english_annotations(self):
 

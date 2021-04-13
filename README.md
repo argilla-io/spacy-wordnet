@@ -44,7 +44,10 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
 # Load an spacy model (supported models are "es", "en" and "pt") 
 nlp = spacy.load('en')
-nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
+# Spacy 3.x
+nlp.add_pipe("spacy_wordnet", after='tagger', config={'lang': nlp.lang})
+# Spacy 2.x
+# self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en.lang))
 token = nlp('prices')[0]
 
 # wordnet object link spacy token with nltk wordnet interface by giving acces to
