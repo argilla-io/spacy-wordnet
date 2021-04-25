@@ -28,6 +28,31 @@ __WN_LANGUAGES_MAPPING = dict(
     it='ita',
     pt='por',
     de='deu',
+    # other languages from omw
+    sq ='als', # Albanian
+    ar ='arb', # Arabic
+    bg ='bul', # Bulgarian
+    ca ='cat', # Catalan
+    zh ='cmn', # Chinese Open Wordnet
+    da ='dan', # Danish
+    el ='ell', # Greek
+    eu ='eus', # Basque
+    fa ='fas', # Persian
+    fi ='fin', # Finnish
+    # ?? ='glg',  # Galician
+    he ='heb', # Hebrew
+    hr ='hrv', # Croatian
+    id ='ind', # Indonesian
+    ja ='jpn', # Japanese
+    nl ='nld', # Dutch
+    # no ='nno', # Norwegian
+    # nb ='nob', # Norwegian Bokmal
+    pl ='pol', # Polish
+    # ?? ='qcn', # Chinese (Taiwan)
+    sl ='slv', # Slovenian
+    sv ='swe', # Swedish
+    th ='tha', # Thai
+    ml ='zsm', # Malayalam
 )
 __WN_POS_MAPPING = {
     ADJ: WN_ADJ,
