@@ -22,7 +22,9 @@ from spacy_wordnet import get_package_basepath
 # then the full mapping is
 __DEFAULT_LANG = 'spa'
 __WN_LANGUAGES_MAPPING = dict(
-    # TODO: select only the best ones?
+  en ='eng', # English (from wordnet)
+  # TODO: select only the best ones?
+  # other languages from omw  
   sq ='als', # Albanian
   ar ='arb', # Arabic
   bg ='bul', # Bulgarian
