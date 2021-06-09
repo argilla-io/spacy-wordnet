@@ -35,6 +35,8 @@ jobs:
         run: pip install .[testing]
       - name: Run tests 📈
         run: |
+          python -m nltk.downloader wordnet
+          python -m nltk.downloader omw
           pip install spacy~=2.0
           python -m spacy download en_core_web_sm
           python -m spacy download es_core_news_sm
