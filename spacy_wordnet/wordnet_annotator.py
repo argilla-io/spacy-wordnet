@@ -4,14 +4,21 @@ from spacy.language import Language
 
 from spacy_wordnet.wordnet_domains import Wordnet, load_wordnet_domains
 
-@Language.factory("spacy_wordnet", default_config={"lang": "en"})
-def wordnet_annotator(nlp, name, lang: str):
-	return WordnetAnnotator(lang=lang)
+try:
+
+    @Language.factory("spacy_wordnet", default_config={"lang": "en"})
+    def wordnet_annotator(nlp, name, lang: str):
+        return WordnetAnnotator(lang=lang)
+
+
+except AttributeError:
+    pass  # spacy 2.x
+
 
 class WordnetAnnotator(object):
-    __FIELD = 'wordnet'
+    __FIELD = "wordnet"
 
-    def __init__(self, lang: str = 'es'):
+    def __init__(self, lang: str = "es"):
         Token.set_extension(WordnetAnnotator.__FIELD, default=None, force=True)
         load_wordnet_domains()
         self.__lang = lang
