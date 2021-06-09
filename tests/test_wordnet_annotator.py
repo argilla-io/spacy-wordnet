@@ -11,21 +11,24 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
 
 class WordnetAnnotatorTest(unittest.TestCase):
-
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
 
-        self.nlp_en = spacy.load('en_core_web_sm')
-        self.nlp_es = spacy.load('es_core_news_sm')
+        self.nlp_en = spacy.load("en_core_web_sm")
+        self.nlp_es = spacy.load("es_core_news_sm")
 
-        # Add wordnet component
-        self.nlp_en.add_pipe("spacy_wordnet", config={'lang': self.nlp_en.lang})
-        self.nlp_es.add_pipe("spacy_wordnet", config={'lang': self.nlp_es.lang})
+        try:
+            # Add wordnet component
+            self.nlp_en.add_pipe("spacy_wordnet", config={"lang": self.nlp_en.lang})
+            self.nlp_es.add_pipe("spacy_wordnet", config={"lang": self.nlp_es.lang})
+        except TypeError:  # spacy 2.x
+            self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en.lang))
+            self.nlp_es.add_pipe(WordnetAnnotator(self.nlp_es.lang))
 
     def test_english_annotations(self):
 
-        token = self.nlp_en('contracts')[0]
+        token = self.nlp_en("contracts")[0]
 
         assert token._.wordnet.synsets()
         assert token._.wordnet.lemmas()
@@ -33,10 +36,10 @@ class WordnetAnnotatorTest(unittest.TestCase):
 
     def test_generate_variants_from_domain_list(self):
 
-        economy_domains = ['finance', 'banking']
+        economy_domains = ["finance", "banking"]
         enriched_sentence = []
 
-        sentence = self.nlp_en('I want to withdraw 5,000 euros')
+        sentence = self.nlp_en("I want to withdraw 5,000 euros")
 
         for token in sentence:
             synsets = token._.wordnet.wordnet_synsets_for_domain(economy_domains)
@@ -45,13 +48,15 @@ class WordnetAnnotatorTest(unittest.TestCase):
                 lemmas_for_synset = []
                 for s in synsets:
                     lemmas_for_synset.extend(s.lemma_names())
-                enriched_sentence.append('({})'.format('|'.join(set(lemmas_for_synset))))
+                enriched_sentence.append(
+                    "({})".format("|".join(set(lemmas_for_synset)))
+                )
             else:
                 enriched_sentence.append(token.text)
-        print(' '.join(enriched_sentence))
+        print(" ".join(enriched_sentence))
 
     def test_spanish_annotations(self):
-        token = self.nlp_es('contratos')[0]
+        token = self.nlp_es("contratos")[0]
 
         assert token._.wordnet.synsets()
         assert token._.wordnet.lemmas()
