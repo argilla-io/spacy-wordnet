@@ -70,4 +70,4 @@ class Wordnet(object):
         return [domain for synset in self.synsets() for domain in get_domains_for_synset(synset)]
 
     def __find_lemmas(self):
-        return [lemma for synset in self.__synsets for lemma in synset.lemmas(lang=self.__lang)]
+        return [lemma for synset in self.synsets() for lemma in synset.lemmas(lang=self.__lang)]
