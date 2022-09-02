@@ -66,7 +66,8 @@ class Wordnet(object):
 
         acceptable_pos = {"verb": VERB, "noun": NOUN, "adj": ADJ}
 
-        if not all(map(lambda p: p in acceptable_pos, pos)):
+        # check if any element in `pos` is not in `acceptable_pos`
+        if set(pos).difference(acceptable_pos):
             raise ValueError("pos argument must be a combination of 'verb', "
                              "'noun', or 'adj'.")
 
