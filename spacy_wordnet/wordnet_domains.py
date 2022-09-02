@@ -26,17 +26,18 @@ def get_domains_for_synset(synset: Synset) -> List[str]:
     ssid = '{}-{}'.format(str(synset.offset()).zfill(8), synset.pos())
     return __WN_DOMAINS_BY_SSID.get(ssid, [])
 
+
 class Wordnet(object):
 
     def __init__(self, token: Token, lang: str = 'es'):
         self.__token = token
         self.__lang = fetch_wordnet_lang(lang)
-        self.__synsets = self.__find_synsets(token, self.__lang)
+        self.__synsets = self.__find_synsets
         self.__lemmas = self.__find_lemmas()
         self.__wordnet_domains = self.__find_wordnet_domains()
 
-    def synsets(self):
-        return self.__synsets
+    def synsets(self, pos: Optional[str, List[str]] = None):
+        return self.__synsets(self.__token, self.__lang, pos=pos)
 
     def lemmas(self):
         return self.__lemmas
