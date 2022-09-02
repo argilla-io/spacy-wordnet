@@ -1,3 +1,4 @@
+from typing import Union
 from nltk.corpus import wordnet as wn
 from nltk.corpus.reader.wordnet import Synset
 from spacy.tokens.token import Token
@@ -50,7 +51,10 @@ class Wordnet(object):
         return [synset for synset in self.synsets() if self.__has_domains(synset, domains)]
 
     @staticmethod
-    def __find_synsets(token: Token, lang: str) -> List[Synset]:
+    def __find_synsets(token: Token,
+                       lang: str,
+                       pos: Optional[Union[str,
+                                           List[str]]] = None) -> List[Synset]:
         word_variants = [token.text]
         if token.pos in [VERB, NOUN, ADJ]:
             # extend synset coverage using lemmas
