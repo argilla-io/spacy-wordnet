@@ -94,9 +94,11 @@ class Wordnet(object):
             word_variants.append(token.lemma_)
 
         for word in word_variants:
-            token_synsets: List[Synset] = wn.synsets(
-                word, pos=spacy2wordnet_pos(token.pos), lang=lang
-            )
+            token_synsets: List[Synset] = []
+            for p in token_pos:
+                token_synsets.extend(wn.synsets(
+                    word, pos=spacy2wordnet_pos(p), lang=lang
+                ))
             if token_synsets:
                 return token_synsets
 
