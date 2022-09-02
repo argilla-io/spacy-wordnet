@@ -76,10 +76,9 @@ class Wordnet(object):
             raise ValueError("pos argument must be a combination of 'verb', "
                              "'noun', or 'adj'.")
 
-
-
+        token_pos: List[int] = [acceptable_pos[k] for k in pos]
         word_variants = [token.text]
-        if token.pos in [VERB, NOUN, ADJ]:
+        if token.pos in token_pos:
             # extend synset coverage using lemmas
             word_variants.append(token.lemma_)
 
