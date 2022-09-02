@@ -62,7 +62,12 @@ class Wordnet(object):
             pos = [pos]
 
         elif not isinstance(pos, list):
-            raise TypeError("pos argument must be None, or type str or list.")
+            try:
+                pos = list(pos)
+
+            except TypeError:
+                raise TypeError("pos argument must be None, type str, or type"
+                                "list.")
 
         acceptable_pos = {"verb": VERB, "noun": NOUN, "adj": ADJ}
 
@@ -70,6 +75,8 @@ class Wordnet(object):
         if set(pos).difference(acceptable_pos):
             raise ValueError("pos argument must be a combination of 'verb', "
                              "'noun', or 'adj'.")
+
+
 
         word_variants = [token.text]
         if token.pos in [VERB, NOUN, ADJ]:
