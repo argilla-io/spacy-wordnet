@@ -55,6 +55,21 @@ class Wordnet(object):
                        lang: str,
                        pos: Optional[Union[str,
                                            List[str]]] = None) -> List[Synset]:
+        if pos is None:
+            pos = ["verb", "noun", "adj"]
+
+        elif isinstance(pos, str):
+            pos = [pos]
+
+        elif not isinstance(pos, list):
+            raise TypeError("pos argument must be None, or type str or list.")
+
+        acceptable_pos = {"verb": VERB, "noun": NOUN, "adj": ADJ}
+
+        if not all(map(lambda p: p in acceptable_pos, pos)):
+            raise ValueError("pos argument must be a combination of 'verb', "
+                             "'noun', or 'adj'.")
+
         word_variants = [token.text]
         if token.pos in [VERB, NOUN, ADJ]:
             # extend synset coverage using lemmas
