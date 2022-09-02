@@ -1,6 +1,7 @@
 import unittest
 from collections import defaultdict
 
+from nltk.corpus import wordnet as wn
 import spacy
 
 import numpy as np
@@ -33,6 +34,29 @@ class WordnetAnnotatorTest(unittest.TestCase):
         assert token._.wordnet.synsets()
         assert token._.wordnet.lemmas()
         assert token._.wordnet.wordnet_domains()
+
+        actual_verb_synsets = set(token._.wordnet.synsets(pos="verb"))
+        expected_verb_synsets = {wn.synset('abridge.v.01'),
+                                 wn.synset('compress.v.02'),
+                                 wn.synset('condense.v.07'),
+                                 wn.synset('contract.v.01'),
+                                 wn.synset('contract.v.04'),
+                                 wn.synset('contract.v.06'),
+                                 wn.synset('narrow.v.01'),
+                                 wn.synset('shrink.v.04'),
+                                 wn.synset('sign.v.04')}
+        assert actual_verb_synsets == expected_verb_synsets
+
+        actual_noun_synsets = set(token._.wordnet.synsets(pos="noun"))
+        expected_noun_synsets = {wn.synset('contract.n.01'),
+                                 wn.synset('contract.n.02'),
+                                 wn.synset('contract.n.03')}
+        assert actual_noun_synsets == expected_noun_synsets
+
+        actual_adj_synsets = set(token._.wordnet.synsets(pos="adj"))
+        expected_adj_synsets = {}
+        assert actual_adj_synsets == expected_adj_synsets
+
 
     def test_generate_variants_from_domain_list(self):
 
