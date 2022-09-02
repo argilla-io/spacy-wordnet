@@ -36,7 +36,16 @@ class Wordnet(object):
         self.__lemmas = self.__find_lemmas()
         self.__wordnet_domains = self.__find_wordnet_domains()
 
-    def synsets(self, pos: Optional[str, List[str]] = None):
+    def synsets(self, pos: Optional[str, List[str]] = None) -> List[Synset]:
+        """
+        Load all synsets with a given part of speech tag.
+        If no pos is specified, synsets with 'verb', 'noun', and 'adj'
+        parts of speech will be loaded.
+
+        :param pos: filter returned synsets by part(s) of speech.
+            Acceptable values are "verb", "noun", and "adj".
+        :return: list of synsets
+        """
         return self.__synsets(self.__token, self.__lang, pos=pos)
 
     def lemmas(self):
