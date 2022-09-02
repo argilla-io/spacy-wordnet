@@ -54,9 +54,8 @@ class WordnetAnnotatorTest(unittest.TestCase):
         assert actual_noun_synsets == expected_noun_synsets
 
         actual_adj_synsets = set(token._.wordnet.synsets(pos="adj"))
-        expected_adj_synsets = {}
+        expected_adj_synsets = set()
         assert actual_adj_synsets == expected_adj_synsets
-
 
     def test_generate_variants_from_domain_list(self):
 
