@@ -12,7 +12,6 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
 class WordnetAnnotatorTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
-
         super().__init__(*args, **kwargs)
 
         self.nlp_en = spacy.load("en_core_web_sm")
