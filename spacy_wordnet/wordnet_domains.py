@@ -63,8 +63,7 @@ class Wordnet(object):
     @staticmethod
     def __find_synsets(token: Token,
                        lang: str,
-                       pos: Optional[Union[str,
-                                           List[str]]] = None) -> List[Synset]:
+                       pos: Optional[Union[str, List[str]]] = None) -> List[Synset]:
         if pos is None:
             pos = ["verb", "noun", "adj"]
 
