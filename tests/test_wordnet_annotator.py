@@ -1,12 +1,7 @@
 import unittest
-from collections import defaultdict
 
 from nltk.corpus import wordnet as wn
 import spacy
-
-import numpy as np
-
-from itertools import product
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
@@ -20,11 +15,11 @@ class WordnetAnnotatorTest(unittest.TestCase):
 
         try:
             # Add wordnet component
-            self.nlp_en.add_pipe("spacy_wordnet", config={"lang": self.nlp_en.lang})
-            self.nlp_es.add_pipe("spacy_wordnet", config={"lang": self.nlp_es.lang})
-        except TypeError:  # spacy 2.x
-            self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en.lang))
-            self.nlp_es.add_pipe(WordnetAnnotator(self.nlp_es.lang))
+            self.nlp_en.add_pipe("spacy_wordnet")
+            self.nlp_es.add_pipe("spacy_wordnet")
+        except (ValueError, TypeError):  # spacy 2.x
+            self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en, name="spacy_wordnet"))
+            self.nlp_es.add_pipe(WordnetAnnotator(self.nlp_es, name="spacy_wordnet"))
 
     def test_english_annotations(self):
 
