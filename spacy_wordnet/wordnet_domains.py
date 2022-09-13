@@ -36,8 +36,7 @@ class Wordnet(object):
         self.__lemmas = self.__find_lemmas()
         self.__wordnet_domains = self.__find_wordnet_domains()
 
-    def synsets(self, pos: Optional[Union[str,
-                                          List[str]]] = None) -> List[Synset]:
+    def synsets(self, pos: Optional[Union[str, List[str]]] = None) -> List[Synset]:
         """
         Load all synsets with a given part of speech tag.
         If no pos is specified, synsets with 'verb', 'noun', and 'adj'
