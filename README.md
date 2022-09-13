@@ -54,7 +54,7 @@ nlp = spacy.load('en_core_web_sm')
 # Spacy 3.x
 nlp.add_pipe("spacy_wordnet", after='tagger')
 # Spacy 2.x
-# nlp.add_pipe(WordnetAnnotator(nlp), after='tagger')
+# nlp.add_pipe(WordnetAnnotator(nlp, name="spacy_wordnet"), after='tagger')
 token = nlp('prices')[0]
 
 # wordnet object link spacy token with nltk wordnet interface by giving acces to

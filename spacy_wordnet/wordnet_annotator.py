@@ -8,8 +8,8 @@ from spacy_wordnet.wordnet_domains import Wordnet, load_wordnet_domains
 try:
 
     @Language.factory("spacy_wordnet", default_config={})
-    def wordnet_annotator(nlp, name, lang: str):
-        return WordnetAnnotator(nlp=nlp)
+    def wordnet_annotator(nlp, name):
+        return WordnetAnnotator(nlp=nlp,name=name)
 
 
 except AttributeError:
@@ -20,7 +20,7 @@ except AttributeError:
 class WordnetAnnotator(object):
     __FIELD = "wordnet"
 
-    def __init__(self, nlp: Language):
+    def __init__(self, nlp: Language, name:str):
         Token.set_extension(WordnetAnnotator.__FIELD, default=None, force=True)
         load_wordnet_domains()
         self.__lang = nlp.lang
