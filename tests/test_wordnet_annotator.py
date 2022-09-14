@@ -30,7 +30,10 @@ class WordnetAnnotatorTest(unittest.TestCase):
         assert token._.wordnet.wordnet_domains()
 
         actual_none_synsets = set(token._.wordnet.synsets(pos=None))
-        expected_none_synsets = {}
+        expected_none_synsets = {wn.synset("contract.n.01"),
+                                 wn.synset("contract.n.02"),
+                                 wn.synset("contract.n.03")}
+        assert actual_none_synsets == expected_none_synsets
 
         actual_verb_synsets = set(token._.wordnet.synsets(pos="verb"))
         expected_verb_synsets = {wn.synset('abridge.v.01'),
