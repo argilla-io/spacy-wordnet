@@ -29,25 +29,32 @@ pip install spacy-wordnet
 
 
 ### Supported languages
-We currently support Spanish, English and Portuguese, but we welcome contributions in order to add and test new languages supported by spaCy and NLTK.
+Almost all Open Multi Wordnet languages are supported.
 
 ## Usage
 
+Once you choose the desired language (from the list of supported ones above), you will need to manually download a spaCy model for it. Check the list of available models for each language at [SpaCy 2.x](https://v2.spacy.io/models) or [SpaCy 3.x](https://spacy.io/usage/models).
 
 ### English example
 
+Download example model:
+```bash
+python -m spacy download en_core_web_sm
+```
+
+Run:
 ````python
 
 import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-# Load an spacy model (supported models are "es", "en" and "pt") 
-nlp = spacy.load('en')
+# Load an spacy model
+nlp = spacy.load('en_core_web_sm')
 # Spacy 3.x
-nlp.add_pipe("spacy_wordnet", after='tagger', config={'lang': nlp.lang})
+nlp.add_pipe("spacy_wordnet", after='tagger')
 # Spacy 2.x
-# self.nlp_en.add_pipe(WordnetAnnotator(self.nlp_en.lang))
+# nlp.add_pipe(WordnetAnnotator(nlp, name="spacy_wordnet"), after='tagger')
 token = nlp('prices')[0]
 
 # wordnet object link spacy token with nltk wordnet interface by giving acces to
@@ -85,14 +92,23 @@ print(' '.join(enriched_sentence))
 
 ### Portuguese example
 
+Download example model:
+```bash
+python -m spacy download pt_core_news_sm
+```
+
+Run:
 ```python
 import spacy
 
 from spacy_wordnet.wordnet_annotator import WordnetAnnotator 
 
-# Load an spacy model (you need to download the spacy pt model) 
-nlp = spacy.load('pt')
-nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
+# Load an spacy model
+nlp = spacy.load('pt_core_news_sm')
+# Spacy 3.x
+nlp.add_pipe("spacy_wordnet", after='tagger', config={'lang': nlp.lang})
+# Spacy 2.x
+# nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 text = "Eu quero retirar 5.000 euros"
 economy_domains = ['finance', 'banking']
 enriched_sentence = []
@@ -114,5 +130,3 @@ for token in sentence:
 print(' '.join(enriched_sentence))
 # >> Eu (querer|desejar|esperar) retirar 5.000 euros
 ```
-
-

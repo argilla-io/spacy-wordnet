@@ -32,11 +32,11 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ env.CACHE_NUMBER }}-${{ hashFiles('setup.cfg') }}
       - name: Install package 🧊
-        run: pip install .[testing]
+        run: |
+          pip install .[testing]
       - name: Run tests 📈
         run: |
-          python -m nltk.downloader wordnet
-          python -m nltk.downloader omw
+          python -c "import nltk;nltk.download('wordnet');nltk.download('omw')"
           pip install spacy~=2.0
           python -m spacy download en_core_web_sm
           python -m spacy download es_core_news_sm
