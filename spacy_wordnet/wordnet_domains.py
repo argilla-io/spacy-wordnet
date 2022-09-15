@@ -102,7 +102,7 @@ class Wordnet(object):
         if not token_pos:
            token_pos = [token.pos]
         word_variants = [token.text]
-        if token.pos in token_pos:
+        if token.pos in (token_pos if pos else acceptable_pos.values()):
             # extend synset coverage using lemmas
             word_variants.append(token.lemma_)
 
