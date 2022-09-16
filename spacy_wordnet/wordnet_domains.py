@@ -52,8 +52,11 @@ class Wordnet(object):
     def synsets(self, pos: Optional[Union[str, List[str]]] = None) -> List[Synset]:
         """
         Load all synsets with a given part of speech tag.
-        If no pos is specified, synsets with the same parts of speech 
-        as `token.pos` will be loaded.
+        If no pos is specified and `token.pos` is a VERB, NOUN, 
+        or ADJ, synsets with the same parts of speech as 
+        `token.pos` will be loaded. If `token.pos` is not a 
+        VERB, NOUN, or ADJ and no pos is specified, an empty 
+        list will be returned.
 
         :param pos: filter returned synsets by part(s) of speech.
             Acceptable values are "verb", "noun", and "adj".
