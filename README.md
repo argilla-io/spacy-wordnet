@@ -106,7 +106,7 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 # Load an spacy model
 nlp = spacy.load('pt_core_news_sm')
 # Spacy 3.x
-nlp.add_pipe("spacy_wordnet", after='tagger', config={'lang': nlp.lang})
+nlp.add_pipe("spacy_wordnet", after='tagger')
 # Spacy 2.x
 # nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 text = "Eu quero retirar 5.000 euros"
